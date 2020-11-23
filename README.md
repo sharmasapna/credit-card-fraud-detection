@@ -151,7 +151,7 @@ print(X_train.shape,X_test.shape)
 
 ```
 
-### 3. Handling the imbalance in dataset.
+### 4. Handling the imbalance in dataset.
 ```ruby
 
 ```
@@ -170,7 +170,7 @@ print(X_train.shape,X_test.shape)
 ```ruby
 
 ```
-### 4. Model Implementation
+### 5. Model Implementation
 ```ruby
 
 ```
@@ -192,7 +192,7 @@ print(X_train.shape,X_test.shape)
 ```ruby
 
 ```
-### 5. Predictions
-### 6. Results
+### 6. Predictions
+### 7. Results
 
 
