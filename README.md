@@ -37,9 +37,119 @@ plt.figure(figsize=(20,20))
 #plot heat map
 g=sns.heatmap(df_train[top_corr_features].corr(),annot=True,cmap="RdYlGn")
 ```
-### 2. Data transformation and feature engineering
+```ruby
+# plotting the classes
+count_classes = pd.value_counts(df_train['is_fraud'], sort = True)
+
+count_classes.plot(kind = 'bar', rot=0)
+
+plt.title("Transaction Class Distribution")
+LABELS = ['Normal','Fraud']
+plt.xticks(range(2), LABELS)
+
+plt.xlabel("Class")
+
+plt.ylabel("Frequency")
+```
+
+### 3. Data transformation and feature engineering
+Columns to drop
+The first column contains just the indices and is not useful so we will drop it.
+The third column with customer card number is also not useful , so we will drop it. 
+First name and Last name can also be dropped.
+Transaction number - is it really needed? can be dropped.
+
+```ruby
+def dropCol(data):
+    col_to_drop = ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
+    res = data.drop(col_to_drop,axis = 1)
+    return res
+new = dropCol(df_train)
+```
+#### 3.1 Since the data set is large we wil work on a fraction of the data set to save time
+```ruby
+# sampling to run the model faster
+
+train_sample= df_train.sample(frac = 0.1,random_state=1)
+train_sample.shape
+
+```
+Observing the data after sampling
+
+```ruby
+# observing the data after sampling
+fraud_sample = train_sample[train_sample['is_fraud']==1]
+valid_sample = train_sample[train_sample['is_fraud']==0]
+
+fraud_org = df_train[df_train['is_fraud']==1]
+valid_org = df_train[df_train['is_fraud']==0]
+# sanity check
+outlier_fraction = len(fraud_org)/float(len(valid_org))
+outlier_fraction_sample = len(fraud_sample)/float(len(valid_sample))
+
+print("Outlier fraction original:{} \nOutlier fraction Sample  :{}".format(outlier_fraction,outlier_fraction_sample))
+#print("Fraud Cases Sample : {}".format(len(fraud_sample)))
+#print("Valid Cases Sample : {}".format(len(valid_sample)))
+```
+#### 3.2 Dropping the columns
+```ruby
+# dropping the columns
+# dropping the columns ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
+# complete data set
+train_sample = dropCol(train_sample)
+# fraud
+fraud_sample = dropCol(fraud_sample)
+#valid
+valid_sample = dropCol(valid_sample)
+# for test data
+X_test = dropCol(df_test)
+print ( train_sample.shape, fraud_sample.shape, valid_sample.shape,X_test.shape)
+```
+```ruby
+
+```
+
 ### 3. Handling the imbalance in dataset.
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
 ### 4. Model Implementation
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
+```ruby
+
+```
 ### 5. Predictions
 ### 6. Results
 
