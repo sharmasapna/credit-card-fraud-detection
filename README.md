@@ -13,12 +13,30 @@ The dataset consists of simulated credit card transactions containing both legit
 To predict the fraudulent transaction with 100% accuracy.
 
 Steps followed in notebook :
-### 1. EDA 
+### 1. Loading the data 
 
-'''ruby
+```ruby
 df_train = pd.read_csv("fraudTrain.csv")
 df_test = pd.read_csv("fraudTest.csv")
-'''
+```
+### 2. Data Exploration
+```ruby
+print(df_train.shape,df_test.shape)
+df_train.isnull().sum()
+df_train.corr()
+```
+```ruby
+## Correlation
+import seaborn as sns
+
+#get correlations of each features in dataset
+corrmat = df_train.corr()
+top_corr_features = corrmat.index
+plt.figure(figsize=(20,20))
+
+#plot heat map
+g=sns.heatmap(df_train[top_corr_features].corr(),annot=True,cmap="RdYlGn")
+```
 ### 2. Data transformation and feature engineering
 ### 3. Handling the imbalance in dataset.
 ### 4. Model Implementation
