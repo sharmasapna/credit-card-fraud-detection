@@ -105,6 +105,45 @@ valid_sample = dropCol(valid_sample)
 X_test = dropCol(df_test)
 print ( train_sample.shape, fraud_sample.shape, valid_sample.shape,X_test.shape)
 ```
+#### 3.3 Creating Independent and Dependent Features
+```ruby
+
+# Create independent and Dependent Features
+columns = train_sample.columns.tolist()
+
+# removing the dependent feature is_fraud
+columns = [c for c in columns if c not in ["is_fraud"]]
+X_train = train_sample[columns]
+Y_train = train_sample['is_fraud']
+X_test = df_test[columns]
+Y_test = df_test['is_fraud']
+print ( X_train.shape, Y_train.shape,X_test.shape, Y_test.shape)
+```
+
+#### 3.4 Feature engineering
+##### 3.4 Convering the date of birth to age
+
+```ruby
+import numpy as np
+import datetime
+from datetime import date
+def age_years(born):
+    return 2019 - int(born[0:4])
+
+X_train['age'] = X_train['dob'].apply(lambda x: age_years(x))
+X_train = X_train.drop(['dob'],axis =1)
+
+X_test['age'] = X_test['dob'].apply(lambda x: age_years(x))
+X_test = X_test.drop(['dob'],axis =1)
+print(X_train.shape,X_test.shape)
+```
+
+```ruby
+
+```
+```ruby
+
+```
 ```ruby
 
 ```
