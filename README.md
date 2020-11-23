@@ -14,6 +14,11 @@ To predict the fraudulent transaction with 100% accuracy.
 
 Steps followed in notebook :
 ### 1. EDA 
+
+'''ruby
+df_train = pd.read_csv("fraudTrain.csv")
+df_test = pd.read_csv("fraudTest.csv")
+'''
 ### 2. Data transformation and feature engineering
 ### 3. Handling the imbalance in dataset.
 ### 4. Model Implementation
