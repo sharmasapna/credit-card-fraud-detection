@@ -53,19 +53,7 @@ plt.ylabel("Frequency")
 ```
 
 ### 3. Data transformation and feature engineering
-Columns to drop
-The first column contains just the indices and is not useful so we will drop it.
-The third column with customer card number is also not useful , so we will drop it. 
-First name and Last name can also be dropped.
-Transaction number - is it really needed? can be dropped.
 
-```ruby
-def dropCol(data):
-    col_to_drop = ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
-    res = data.drop(col_to_drop,axis = 1)
-    return res
-new = dropCol(df_train)
-```
 #### 3.1 Since the data set is large we wil work on a fraction of the data set to save time
 ```ruby
 # sampling to run the model faster
@@ -92,6 +80,21 @@ print("Outlier fraction original:{} \nOutlier fraction Sample  :{}".format(outli
 #print("Valid Cases Sample : {}".format(len(valid_sample)))
 ```
 #### 3.2 Dropping the columns
+
+The first column contains just the indices and is not useful so we will drop it.
+The third column with customer card number is also not useful , so we will drop it. 
+First name and Last name can also be dropped.
+Transaction number - is it really needed? can be dropped.
+
+```ruby
+def dropCol(data):
+    col_to_drop = ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
+    res = data.drop(col_to_drop,axis = 1)
+    return res
+new = dropCol(df_train)
+```
+
+
 ```ruby
 # dropping the columns
 # dropping the columns ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
@@ -121,7 +124,7 @@ print ( X_train.shape, Y_train.shape,X_test.shape, Y_test.shape)
 ```
 
 #### 3.4 Feature engineering
-##### 3.4 Convering the date of birth to age
+##### 3.4.1 Convering the date of birth to age
 
 ```ruby
 import numpy as np
