@@ -72,59 +72,31 @@ print("Normal cases in test set :",len(df_test)-len(fraud_test),"\nFraud cases i
 
 ### 3. Data transformation and feature engineering
 
-#### 3.1 
+From the exploratory data Analysis we make the following observations:   
+
+1. The first column contains just the indices and is not useful so we will drop it.   
+2. The third column with customer card number is also not useful , so we will drop it. 
+3. "first name" and "last name" can also be dropped.  
+4. Transaction number - is it really needed? can be dropped.
+5. Date time column can be used to calculate the age of the customer
+
+#### 3.1 Dropping the columns not needed
 ```ruby
-# sampling to run the model faster
-
-train_sample= df_train.sample(frac = 0.1,random_state=1)
-train_sample.shape
-
-```
-Observing the data after sampling
-
-```ruby
-# observing the data after sampling
-fraud_sample = train_sample[train_sample['is_fraud']==1]
-valid_sample = train_sample[train_sample['is_fraud']==0]
-
-fraud_org = df_train[df_train['is_fraud']==1]
-valid_org = df_train[df_train['is_fraud']==0]
-# sanity check
-outlier_fraction = len(fraud_org)/float(len(valid_org))
-outlier_fraction_sample = len(fraud_sample)/float(len(valid_sample))
-
-print("Outlier fraction original:{} \nOutlier fraction Sample  :{}".format(outlier_fraction,outlier_fraction_sample))
-#print("Fraud Cases Sample : {}".format(len(fraud_sample)))
-#print("Valid Cases Sample : {}".format(len(valid_sample)))
-```
-#### 3.2 Dropping the columns
-
-The first column contains just the indices and is not useful so we will drop it.
-The third column with customer card number is also not useful , so we will drop it. 
-First name and Last name can also be dropped.
-Transaction number - is it really needed? can be dropped.
-
-```ruby
+# function to drop tbe columns
 def dropCol(data):
     col_to_drop = ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
     res = data.drop(col_to_drop,axis = 1)
     return res
-new = dropCol(df_train)
 ```
-
-
 ```ruby
 # dropping the columns
 # dropping the columns ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
-# complete data set
-train_sample = dropCol(train_sample)
-# fraud
-fraud_sample = dropCol(fraud_sample)
-#valid
-valid_sample = dropCol(valid_sample)
-# for test data
-X_test = dropCol(df_test)
-print ( train_sample.shape, fraud_sample.shape, valid_sample.shape,X_test.shape)
+# train data set
+df_train = dropCol(df_train)
+
+# test data set
+df_test = dropCol(df_test)
+print ( df_train.shape, df_test.shape)
 ```
 #### 3.3 Creating Independent and Dependent Features
 ```ruby
