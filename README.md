@@ -144,6 +144,7 @@ print(X_train.shape,X_test.shape)
 ```ruby
 
 ```
+##### 3.4.2 One hot encoding
 ```ruby
 
 ```
@@ -152,24 +153,29 @@ print(X_train.shape,X_test.shape)
 ```
 
 ### 4. Handling the imbalance in dataset.
+#### 4.1 Under Sampling
 ```ruby
 
 ```
 ```ruby
 
 ```
+#### 4.2 Over Sampling
 ```ruby
 
 ```
 ```ruby
 
 ```
+#### 4.3 SMOTE (Synthetic Minority Oversampling Technique)
 ```ruby
 
 ```
+#### 4.4 Near Miss (NearMiss Algorithm – Undersampling)
 ```ruby
 
 ```
+
 ### 5. Model Implementation
 ```ruby
 
