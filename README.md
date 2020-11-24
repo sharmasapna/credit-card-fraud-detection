@@ -20,36 +20,44 @@ df_train = pd.read_csv("fraudTrain.csv")
 df_test = pd.read_csv("fraudTest.csv")
 ```
 ### 2. Data Exploration
+#### 2.1 Data Information
+```ruby
+df.info()
+```
+#### 2.2 Shape of Data
+
+
 ```ruby
 print(df_train.shape,df_test.shape)
 df_train.isnull().sum()
 df_train.corr()
 ```
+#### 2.3 Taking a fraction to run the model faster
 ```ruby
-## Correlation
-import seaborn as sns
-
+# taking smaller sample to run the model faster
+df_train= data_train.sample(frac = 0.1,random_state=1)
+df_test= data_test.sample(frac = 0.05,random_state=1)
+print(df_train.shape,df_test.shape)
+```
+#### 2.4 Checking the null values
+```ruby
+df_train.isnull().sum()
+df_test.isnull().sum()
+```
+#### 2.5 Correlation Matrix
 #get correlations of each features in dataset
 corrmat = df_train.corr()
 top_corr_features = corrmat.index
-plt.figure(figsize=(20,20))
+plt.figure(figsize=(15,15))
 
 #plot heat map
 g=sns.heatmap(df_train[top_corr_features].corr(),annot=True,cmap="RdYlGn")
-```
+
+#### 2.6 Histograms
 ```ruby
-# plotting the classes
-count_classes = pd.value_counts(df_train['is_fraud'], sort = True)
-
-count_classes.plot(kind = 'bar', rot=0)
-
-plt.title("Transaction Class Distribution")
-LABELS = ['Normal','Fraud']
-plt.xticks(range(2), LABELS)
-
-plt.xlabel("Class")
-
-plt.ylabel("Frequency")
+#visual representation of the data using histograms 
+df_train.hist(figsize = (15, 15))
+plt.show()
 ```
 
 ### 3. Data transformation and feature engineering
