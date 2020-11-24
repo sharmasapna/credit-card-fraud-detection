@@ -59,10 +59,20 @@ g=sns.heatmap(df_train[top_corr_features].corr(),annot=True,cmap="RdYlGn")
 df_train.hist(figsize = (15, 15))
 plt.show()
 ```
+#### 2.7  Getting the Fraud and the Normal  transaction numbers for test and train datase
+```ruby
+fraud_train = df_train[df_train['is_fraud']==1]
+normal_train = df_train[df_train['is_fraud']==0]
+fraud_test = df_test[df_test['is_fraud']==1]
+normal_test = df_test[df_test['is_fraud']==0]
+
+print("Normal cases in train set :",len(df_train)-len(fraud_train),"\nFraud cases in train set :",len(fraud_train))
+print("Normal cases in test set :",len(df_test)-len(fraud_test),"\nFraud cases in test set :",len(fraud_test))
+```
 
 ### 3. Data transformation and feature engineering
 
-#### 3.1 Since the data set is large we wil work on a fraction of the data set to save time
+#### 3.1 
 ```ruby
 # sampling to run the model faster
 
