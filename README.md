@@ -412,7 +412,9 @@ print_eval(y_pred,decision_tree_model_nm)
 ```ruby
 
 ```
-### 6. Predictions
-### 7. Results
+### 6. Outlier Detection Techniques
+
+### 7. Predictions
+### 8. Results
 
 
