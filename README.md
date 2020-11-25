@@ -151,7 +151,8 @@ for feature in categorical_features:
     print("Distinct categories for {}  are {}".format(feature,len(final_df[feature].unique())))
 
 ```
-`# function to convert categorical variables to one hot encoding
+```ruby
+# function to convert categorical variables to one hot encoding
 def category_onehot_multcols(data,multcolumns):
     df_final = data
     i=0
