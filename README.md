@@ -45,6 +45,7 @@ df_train.isnull().sum()
 df_test.isnull().sum()
 ```
 #### 2.5 Correlation Matrix
+```ruby
 #get correlations of each features in dataset
 corrmat = df_train.corr()
 top_corr_features = corrmat.index
@@ -52,7 +53,7 @@ plt.figure(figsize=(15,15))
 
 #plot heat map
 g=sns.heatmap(df_train[top_corr_features].corr(),annot=True,cmap="RdYlGn")
-
+```
 #### 2.6 Histograms
 ```ruby
 #visual representation of the data using histograms 
@@ -93,9 +94,9 @@ def dropCol(data):
 # dropping the columns ['trans_date_trans_time','Unnamed: 0','cc_num','first','last','trans_num']
 # train data set
 df_train = dropCol(df_train)
-
 # test data set
 df_test = dropCol(df_test)
+
 print ( df_train.shape, df_test.shape)
 ```
 #### 3.3 Creating Independent and Dependent Features
@@ -113,36 +114,109 @@ Y_test = df_test['is_fraud']
 print ( X_train.shape, Y_train.shape,X_test.shape, Y_test.shape)
 ```
 
-#### 3.4 Feature engineering
-##### 3.4.1 Convering the date of birth to age
+
+#### 3.4 Convering the date of birth to age
 
 ```ruby
-import numpy as np
-import datetime
-from datetime import date
+# function to convert dob to years
 def age_years(born):
     return 2019 - int(born[0:4])
 
+# replacing the dob column with age column in our data set for test and train
 X_train['age'] = X_train['dob'].apply(lambda x: age_years(x))
 X_train = X_train.drop(['dob'],axis =1)
 
 X_test['age'] = X_test['dob'].apply(lambda x: age_years(x))
 X_test = X_test.drop(['dob'],axis =1)
 print(X_train.shape,X_test.shape)
+
 ```
 
+#### 3.5 Converting the categorical features to numerical by one- hot - encoding
 ```ruby
+# concanating the test and train data so that number of columns remain the same in both the data sets
+final_df=pd.concat([X_train,X_test],axis=0)
+final_df.shape
 
 ```
-##### 3.4.2 One hot encoding
 ```ruby
+# creating the list of categorical variables
+categorical_features =[feature for feature in X_train.columns if final_df[feature].dtypes == 'O']
+categorical_features
 
 ```
 ```ruby
+#observing the unique values in each feature
+for feature in categorical_features:
+    print("Distinct categories for {}  are {}".format(feature,len(final_df[feature].unique())))
 
 ```
+`# function to convert categorical variables to one hot encoding
+def category_onehot_multcols(data,multcolumns):
+    df_final = data
+    i=0
+    for fields in multcolumns:
+        print(fields)
+        df1=pd.get_dummies(final_df[fields],drop_first=True)
+        final_df.drop([fields],axis=1,inplace=True)
+        if i==0:
+            df_final=df1.copy()
+        else:           
+            df_final=pd.concat([df_final,df1],axis=1)
+        i=i+1             
+    df_final=pd.concat([final_df,df_final],axis=1)
+    return df_final``ruby
+
+```
+```ruby
+# applying the one hot encoding
+final_df = category_onehot_multcols(final_df, categorical_features)
+
+```
+```ruby
+# removing duplicated columns
+final_df =final_df.loc[:,~final_df.columns.duplicated()]
+final_df.shape
+
+```
+```ruby
+# separating the test and training data
+df_Train=final_df.iloc[:129668,:]
+df_Test=final_df.iloc[129668:,:]
+print(df_Train.shape,df_Test.shape)
+
+```
+```ruby
+# files ready for testing on models
+print(df_Train.shape, df_Test.shape, Y_train.shape, Y_test.shape)
+```
+
 
 ### 4. Handling the imbalance in dataset.
+
+
+There can be two approaches to predict the the fraud cases:
+1. Handle the Imbalance in data by one of the following methods:
+   1.1 Under Sampling   
+   1.2 Over Sampling   
+   1.3 SMOTE (Synthetic Minority over sampling technique)   
+   1.4 Near Miss algorighm ( under sampling )   
+   1.5 Ensemble method 
+   
+   
+2. Considering the Fraud cases as anamoly and use anamoly detection methods such as:   
+   2.1 Simple Statistical Methods : Metrics such as distribution, including mean, median, mode, and quantiles could be used to identify outliers since the definition of an anomalous data point is one that deviates by a certain standard deviation from the mean. 
+   2.2 Density-Based Anomaly Detection : These include the k-nearest neighbors algorithm, Relative density of data based method known as local outlier factor (LOF) algorithm    
+   2.3 Clustering-Based Anomaly Detection : K-means algorithm  
+   2.4 Support Vector Machine-Based Anomaly Detection      
+   2.5 Isolation Forest  
+   2.6 Using Auto Encoders 
+   
+
+
+
+
+
 #### 4.1 Under Sampling
 ```ruby
 
