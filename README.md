@@ -191,6 +191,13 @@ print(df_Train.shape,df_Test.shape)
 # files ready for testing on models
 print(df_Train.shape, df_Test.shape, Y_train.shape, Y_test.shape)
 ```
+As we see that the data is skewed, i.e the number of samples for class 1 is less tha 0.5% of the samples of class 0.
+In this case the the machine learning algorithms with not predict the Fraud cases correctly.
+To predict the Fraud correctly we have two approaches:   
+1. Handle the imbalance in Data and apply various Machine Learning algorithms    
+2. Predict Fraud as outlier/Anomaly  
+
+We proceed for the first method first.
 
 
 ### 4. Handling the imbalance in dataset.
@@ -203,20 +210,49 @@ There can be two approaches to predict the the fraud cases:
        4.1.4 Near Miss algorighm ( under sampling )   
        4.1.5 Ensemble method 
    
-   
-4.2. Considering the Fraud cases as anamoly and use anamoly detection methods such as:   
-> 4.2.1 Simple Statistical Methods : Metrics such as distribution, including mean, median, mode, and quantiles could be used to identify outliers since the definition of an anomalous data point is one that deviates by a certain standard deviation from the mean. 
-       4.2.2 Density-Based Anomaly Detection : These include the k-nearest neighbors algorithm, Relative density of data based method known as local outlier factor (LOF) algorithm    
-       4.2.3 Clustering-Based Anomaly Detection : K-means algorithm  
-       4.2.4 Support Vector Machine-Based Anomaly Detection      
-       4.2.5 Isolation Forest 
-       4.2.6 Using Auto Encoders 
-   
+First we apply the model without handling the imbalance. We will use Logistic Regression and Decision Tree classifier for our exploration of the method to apply to handle imbalance in data. 
+**Logistic Regression**
+```ruby   
+# Logistic Regression
+model_LR = LogisticRegression()
+model_LR.fit(df_Train,Y_train)
+y_pred = model_LR.predict(df_Test)
 
-   
+```
+```ruby
+#Let's evaluate our model 
+def print_eval(y_pred,model):
+    print("Training Accuracy: ",model.score(df_Train, Y_train))
+    print("Testing Accuracy: ", model.score(df_Test, Y_test))
+    cm = confusion_matrix(Y_test, y_pred)
+    print(cm)
+    print(classification_report(Y_test,y_pred))
+print_eval(y_pred,model_LR)  
+```
+ **Decision Tree**
+ ```ruby
+ # decision tree
+decision_tree_model = DecisionTreeClassifier(random_state=137)
+decision_tree_model.fit(df_Train,Y_train)
+y_pred = decision_tree_model.predict(df_Test)
+print_eval(y_pred,decision_tree_model)
+ ```
+#### Metric Analysis
 
+1. **True  Positives** : Correctly classified as Safe Transaction     = 27333 (.99)   
+2. **False Negitives** : Mis-classified Safe Transaction              = 323 (Harmless)   
+3. **False Positives** : Mis-classified as Fraud Transactions         = 47 (Dangerous )   
+4. **True Negatives**  : Correctly classified as Fraud Transactions   = 83 (out of 130 -> .64)   
+5. **Accuracy**        : .99   
 
+Here the accuracy is not taken into account as it is misleading.   
+We want to get maximum True Negatives i.e we want to predict the Fraud tranactions with maximum accuracy. This can be done by monitoring the Recall.
 
+So when the data is imbalanced the Recall is    
+class 0 (Safe) : 0.99   
+class 1 (Fraud): 0.64   
+
+**We want the recall of class 1 to be close to 1.00**    
 
 
 #### 4.1 Under Sampling
