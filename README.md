@@ -359,13 +359,33 @@ decision_tree_model_smote.fit(X_sm,y_sm)
 y_pred = decision_tree_model_smote.predict(df_Test)
 print_eval(y_pred,decision_tree_model_smote)
 ```
-```ruby
 
-```
-```ruby
-
-```
 #### 4.4 Near Miss (NearMiss Algorithm – Undersampling)
+```ruby
+# near miss
+nr = NearMiss() 
+X_train_miss, y_train_miss = nr.fit_sample(X, y) 
+print('Near Miss:')
+print(y_train_miss.value_counts())
+```
+```ruby
+# training and predictions : Logistic Regression
+model_LR_smote = LogisticRegression()
+model_LR_smote.fit(X_train_miss,y_train_miss)
+y_predict = model_LR_smote.predict(df_Test)
+print(classification_report(Y_test, y_predict))
+
+```
+```ruby
+# training and predictions : decision tree
+decision_tree_model_nm = DecisionTreeClassifier(random_state=137)
+decision_tree_model_nm.fit(X_train_miss,y_train_miss)
+y_pred = decision_tree_model_nm.predict(df_Test)
+print_eval(y_pred,decision_tree_model_nm)
+```
+```ruby
+
+```
 ```ruby
 
 ```
