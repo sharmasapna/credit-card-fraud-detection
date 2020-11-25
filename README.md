@@ -99,7 +99,7 @@ df_test = dropCol(df_test)
 
 print ( df_train.shape, df_test.shape)
 ```
-#### 3.3 Creating Independent and Dependent Features
+#### 3.2 Creating Independent and Dependent Features
 ```ruby
 
 # Create independent and Dependent Features
@@ -115,7 +115,7 @@ print ( X_train.shape, Y_train.shape,X_test.shape, Y_test.shape)
 ```
 
 
-#### 3.4 Convering the date of birth to age
+#### 3.3 Convering the date of birth to age
 
 ```ruby
 # function to convert dob to years
@@ -132,7 +132,7 @@ print(X_train.shape,X_test.shape)
 
 ```
 
-#### 3.5 Converting the categorical features to numerical by one- hot - encoding
+#### 3.4 Converting the categorical features to numerical by one- hot - encoding
 ```ruby
 # concanating the test and train data so that number of columns remain the same in both the data sets
 final_df=pd.concat([X_train,X_test],axis=0)
@@ -195,23 +195,24 @@ print(df_Train.shape, df_Test.shape, Y_train.shape, Y_test.shape)
 
 ### 4. Handling the imbalance in dataset.
 
+There can be two approaches to predict the the fraud cases:   
+4.1. Handle the Imbalance in data by one of the following methods:   
+> 4.1.1 Under Sampling   
+       4.1.2 Over Sampling   
+       4.1.3 SMOTE (Synthetic Minority over sampling technique)   
+       4.1.4 Near Miss algorighm ( under sampling )   
+       4.1.5 Ensemble method 
+   
+   
+4.2. Considering the Fraud cases as anamoly and use anamoly detection methods such as:   
+> 4.2.1 Simple Statistical Methods : Metrics such as distribution, including mean, median, mode, and quantiles could be used to identify outliers since the definition of an anomalous data point is one that deviates by a certain standard deviation from the mean. 
+       4.2.2 Density-Based Anomaly Detection : These include the k-nearest neighbors algorithm, Relative density of data based method known as local outlier factor (LOF) algorithm    
+       4.2.3 Clustering-Based Anomaly Detection : K-means algorithm  
+       4.2.4 Support Vector Machine-Based Anomaly Detection      
+       4.2.5 Isolation Forest 
+       4.2.6 Using Auto Encoders 
+   
 
-There can be two approaches to predict the the fraud cases:
-1. Handle the Imbalance in data by one of the following methods:
-   1.1 Under Sampling   
-   1.2 Over Sampling   
-   1.3 SMOTE (Synthetic Minority over sampling technique)   
-   1.4 Near Miss algorighm ( under sampling )   
-   1.5 Ensemble method 
-   
-   
-2. Considering the Fraud cases as anamoly and use anamoly detection methods such as:   
-   2.1 Simple Statistical Methods : Metrics such as distribution, including mean, median, mode, and quantiles could be used to identify outliers since the definition of an anomalous data point is one that deviates by a certain standard deviation from the mean. 
-   2.2 Density-Based Anomaly Detection : These include the k-nearest neighbors algorithm, Relative density of data based method known as local outlier factor (LOF) algorithm    
-   2.3 Clustering-Based Anomaly Detection : K-means algorithm  
-   2.4 Support Vector Machine-Based Anomaly Detection      
-   2.5 Isolation Forest  
-   2.6 Using Auto Encoders 
    
 
 
