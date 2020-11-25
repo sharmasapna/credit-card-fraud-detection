@@ -383,7 +383,37 @@ decision_tree_model_nm.fit(X_train_miss,y_train_miss)
 y_pred = decision_tree_model_nm.predict(df_Test)
 print_eval(y_pred,decision_tree_model_nm)
 ```
+### 4.5 Comparisions of different models
 ```ruby
+# Test models
+classdict = {'normal':0, 'fraudulent':1}
+print()
+print('========================== Model Test Results ========================' "\n")   
+modlist = [('dc', decision_tree_model),
+           ('dc_us', decision_tree_model_undersample),
+           ('dc_os', decision_tree_model_over_sample),
+           ('dc_smote', decision_tree_model_smote),
+           ('dc_nm', decision_tree_model_nm)
+           
+          ] 
+models = [j for j in modlist]
+for i, v in models:
+    accuracy = metrics.accuracy_score(Y_test, v.predict(df_Test))
+    confusion_matrix = metrics.confusion_matrix(Y_test, v.predict(df_Test))
+    classification = metrics.classification_report(Y_test, v.predict(df_Test))   
+    print('=== {} ==='.format(i))
+    print ("Model Accuracy: ",  '{}%'.format(np.round(accuracy, 3) * 100))
+    print()
+    print("Recall:" "\n", confusion_matrix[1][1]/130)
+    print()
+    #pf.plot_confusion_matrix(confusion_matrix, classes = list(classdict.keys()),title='Confusion Matrix Plot', cmap=plt.cm.summer)
+    print() 
+    print("Classification Report:" "\n", classification) 
+    print() 
+
+print('============================= ROC Curve ===============================' "\n")      
+pf.plot_roc_auc(arg1=models, arg2=df_Test, arg3=Y_test)
+
 
 ```
 ```ruby
