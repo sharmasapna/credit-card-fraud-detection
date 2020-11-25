@@ -255,21 +255,113 @@ class 1 (Fraud): 0.64
 **We want the recall of class 1 to be close to 1.00**    
 
 
-#### 4.1 Under Sampling
+#### 4.1.1 Under Sampling
 ```ruby
+# adding the dependent feature in the train data set
+print(Y_train.shape,df_Train.shape)
+df_train = pd.concat([df_Train,Y_train],axis = 1)
+df_train.shape
 
+```
+
+```ruby
+# Class count
+count_class_0, count_class_1 = df_train.is_fraud.value_counts()
+print(count_class_0, count_class_1)
+# Divide by class
+df_class_0 = df_train[df_train['is_fraud'] == 0]
+df_class_1 = df_train[df_train['is_fraud'] == 1]
+print(df_class_0.shape,df_class_1.shape)
+
+```
+```ruby
+# Undersample 0-class and concat the DataFrames of both class
+df_class_0_under = df_class_0.sample(count_class_1)
+df_train_under_sample = pd.concat([df_class_0_under, df_class_1], axis=0)
+
+print('Random under-sampling:')
+print(df_train_under_sample.is_fraud.value_counts())
+
+```
+```ruby
+# training and predictions : Logistic Regression
+X = df_train_under_sample.drop('is_fraud',axis='columns')
+y = df_train_under_sample['is_fraud']
+model_LR_under_sample = LogisticRegression()
+model_LR_under_sample.fit(X,y)
+y_pred = model_LR.predict(df_Test)
+print_eval(y_pred,model_LR_under_sample)
+```
+```ruby
+# training and predictions : decision tree
+decision_tree_model = DecisionTreeClassifier(random_state=137)
+decision_tree_model.fit(X,y)
+y_pred = decision_tree_model.predict(df_Test)
+print_eval(y_pred,model_LR_under_sample)
+
+```
+
+#### 4.1,2 Over Sampling
+```ruby
+# Class count
+count_class_0, count_class_1 = df_train.is_fraud.value_counts()
+print(count_class_0, count_class_1)
+# Divide by class
+df_class_0 = df_train[df_train['is_fraud'] == 0]
+df_class_1 = df_train[df_train['is_fraud'] == 1]
+print(df_class_0.shape,df_class_1.shape)
+```
+```ruby
+# Oversample 1-class and concat the DataFrames of both class
+df_class_1_over = df_class_1.sample(count_class_0,replace=True)
+df_train_over_sample = pd.concat([df_class_0, df_class_1_over], axis=0)
+
+print('Random over-sampling:')
+
+print(df_train_over_sample.is_fraud.value_counts())
+```
+```ruby
+# training and predictions : Logistic Regression
+X = df_train_over_sample.drop('is_fraud',axis='columns')
+y = df_train_over_sample['is_fraud']
+model_LR_over_sample = LogisticRegression()
+model_LR_over_sample.fit(X,y)
+y_pred = model_LR_over_sample.predict(df_Test)
+print_eval(y_pred,model_LR_over_sample)
+```
+```ruby
+# training and predictions : decision tree
+decision_tree_model_over_sample = DecisionTreeClassifier(random_state=137)
+decision_tree_model_over_sample.fit(X,y)
+y_pred = decision_tree_model_over_sample.predict(df_Test)
+print_eval(y_pred,decision_tree_model_over_sample)
+```
+
+#### 4.3 Implementing SMOTE (Synthetic Minority Oversampling Technique)
+```ruby
+# smote implementation
+smote = SMOTE(sampling_strategy='minority')
+X_sm, y_sm = smote.fit_sample(X, y)
+y_sm.value_counts()
+```
+```ruby
+# training and predictions : Logistic Regression
+
+model_LR_smote = LogisticRegression()
+model_LR_smote.fit(X_sm,y_sm)
+y_predict = model_LR_smote.predict(df_Test)
+print_eval(y_pred,model_LR_smote)
+```
+```ruby
+# training and predictions : decision tree
+decision_tree_model_smote = DecisionTreeClassifier(random_state=137)
+decision_tree_model_smote.fit(X_sm,y_sm)
+y_pred = decision_tree_model_smote.predict(df_Test)
+print_eval(y_pred,decision_tree_model_smote)
 ```
 ```ruby
 
 ```
-#### 4.2 Over Sampling
-```ruby
-
-```
-```ruby
-
-```
-#### 4.3 SMOTE (Synthetic Minority Oversampling Technique)
 ```ruby
 
 ```
