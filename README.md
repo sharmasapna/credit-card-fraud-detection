@@ -203,12 +203,12 @@ We proceed for the first method first.
 ### 4. Handling the imbalance in dataset.
 
 There can be two approaches to predict the the fraud cases:   
-4.1. Handle the Imbalance in data by one of the following methods:   
-> 4.1.1 Under Sampling   
-       4.1.2 Over Sampling   
-       4.1.3 SMOTE (Synthetic Minority over sampling technique)   
-       4.1.4 Near Miss algorighm ( under sampling )   
-       4.1.5 Ensemble method 
+Handling the Imbalance in data by one of the following methods:   
+> 4.1 Under Sampling   
+       4.2 Over Sampling   
+       4.3 SMOTE (Synthetic Minority over sampling technique)   
+       4.4 Near Miss algorighm ( under sampling )   
+       4.5 Ensemble method 
    
 First we apply the model without handling the imbalance. We will use Logistic Regression and Decision Tree classifier for our exploration of the method to apply to handle imbalance in data. 
 **Logistic Regression**
