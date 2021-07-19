@@ -448,7 +448,7 @@ pf.plot_roc_auc(arg1=models, arg2=df_Test, arg3=Y_test)
 ### 8. Results
 
 
-![image](https://user-images.githubusercontent.com/40312249/126192941-a5dc2273-1ed7-4073-ac9f-948bbb0f5c4d.png)
+
 
 
 
